@@ -19,3 +19,17 @@ test('head-to-head comparison returns criterion narratives, never an overall sco
 test('junior plus five years surfaces a restrictive requisition',()=>{assert(requisitionWarnings({...defaultJob,level:'Junior',minYears:5}).some(x=>/restrictive/.test(x)));});
 test('all demo citations are real source lines and no candidate fully matches',()=>{assert.equal(demoCandidates.length,12);for(const c of demoCandidates){const lines=demoSources[c.id].split('\n');for(const d of c.assessment.dimensions)for(const citation of [...d.claims,...d.evidence])assert.equal(citation.quote,lines[citation.line-1].trim());}assert(!demoCandidates.some(c=>fit(c,defaultJob).complete));});
 test('1000 applications retain per-criterion dimensions and deterministic review order',()=>{const pool=Array.from({length:1000},(_,i)=>make(`Applicant ${i}\nExperience\nEngineer 2022–2026\nDeveloped Python ingestion jobs for warehouse reporting across regions.`,String(i)));const ranked=rankCandidates(pool,defaultJob);assert.equal(ranked.length,1000);assert.equal(new Set(ranked.map(c=>c.id)).size,1000);assert(ranked.every(c=>c.assessment.dimensions.length===6));});
+
+
+import {reviewPlan,interviewBrief} from '../lib/review-plan';
+test('role-agnostic review plan does not shortlist unsupported keyword claims',()=>{
+ const job={...defaultJob,title:'Operations Specialist',minYears:0,salaryMax:0,criteria:[{id:'inventory',name:'Inventory management',required:true,aliases:['stock control']}]};
+ const c=make('Skills: stock control');c.assessment=assess('Skills: stock control',job);
+ const plan=reviewPlan(c,job);assert.equal(plan.title,'Request evidence before shortlisting');assert.equal(plan.items[0].status,'unsupported');assert.match(plan.items[0].question,/own contribution/);assert.equal(plan.items[0].citations[0].line,1);assert.match(interviewBrief(c,job),/Operations Specialist/);assert.equal(c.decision,'Unreviewed');
+});
+test('supported evidence and explicit conflicts lead to clarification, not automatic acceptance',()=>{
+ const c=make('Built Python reporting services for the monthly inventory tracking workflow.');
+ const job={...defaultJob,minYears:0,salaryMax:0,criteria:[defaultJob.criteria[0]]};
+ c.assessment.flags.push({type:'contradiction',title:'Ownership conflict',reason:'Conflicting statements',citations:[{line:1,quote:'I built it'},{line:2,quote:'I did not build it'}]});
+ const plan=reviewPlan(c,job);assert.match(plan.title,/Clarify/);assert.equal(plan.clarifications[0].citations.length,2);assert.match(plan.items[0].question,/trade-off/);assert.equal(c.decision,'Unreviewed');
+});

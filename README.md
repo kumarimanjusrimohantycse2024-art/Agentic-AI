@@ -26,11 +26,21 @@ Copy `.env.example` into your ignored local environment file if configuring loca
 
 | Variable | Purpose |
 | --- | --- |
-| `OPENAI_API_KEY` | Enables semantic AI evidence review after the deterministic stages |
-| `OPENAI_MODEL` | Model with JSON object chat-completions support; default `gpt-4.1-mini` |
+| `GROQ_API_KEY` | Server-only key from a Groq Free-plan account; enables semantic evidence review |
+| `GROQ_MODEL` | Default `openai/gpt-oss-20b`, served by Groq; requires JSON object support |
 | `GITHUB_TOKEN` | Optional GitHub token restricted to reading public resources; increases quota |
 
-No credential is embedded in the client, source, or demo. Without an AI key the application **uses deterministic rules and labels this explicitly**. The UI and reports never simulate a language-model call. Model access, usage costs and GitHub quotas belong to the operator's account.
+No credential is embedded in the client, source, or demo. Without an AI key the application **uses deterministic rules and labels this explicitly**. The UI and reports never simulate a language-model call. Groq account tier and GitHub quotas belong to the operator. The application calls only Groq for semantic review and has no paid-provider fallback. An old `OPENAI_API_KEY` does not activate AI. A Groq key from an upgraded paid account can still incur charges: keep the account on the Free plan.
+
+### Activate free semantic review
+
+1. Sign up at [Groq Console](https://console.groq.com/keys) and create a key in your own account. Stay on the **Free plan**; do not upgrade to Developer billing.
+2. Save it in your hosting environment as the **secret** `GROQ_API_KEY`. Never paste it into chat, GitHub, or a browser-side variable. Set `GROQ_MODEL=openai/gpt-oss-20b` (or use the default), then redeploy for hosted environment changes to take effect.
+3. Settings shows configuration status. Process a small synthetic application and inspect its agent trace to confirm an actual successful Groq assessment. Configuration alone does not prove that a key works.
+
+Groq's [free quota](https://console.groq.com/docs/rate-limits) currently lists 30 requests/minute, 1,000 requests/day, 8,000 tokens/minute and 200,000 tokens/day for this model (checked 2026-09-10). Your account limits are authoritative and may change. A 1,000-résumé intake does **not** promise 1,000 free semantic reviews per day: token quotas can be reached much earlier. Rate limits, invalid credentials, timeouts or invalid responses retain the evidence-rule report with an explicit trace; there are no automatic provider retries, key rotation or paid fallback. Re-screen later when quota is available. Hosting and storage have their own terms; this setup does not promise universally free hosting.
+
+Résumé source lines are sent to Groq for semantic analysis. Review [Groq data controls](https://console.groq.com/docs/your-data); all customers can enable Zero Data Retention. Model interpretations still require HR review.
 
 ## HR workflow
 
@@ -56,7 +66,7 @@ No credential is embedded in the client, source, or demo. Without an AI key the 
 | Pool gaps | Supported count per criterion and explicit notice when nobody satisfies all requirements |
 | What-if | Live recalculation of readiness, rank, remaining gaps and saved-versus-scenario differences |
 
-Additional features: authenticated persistence, original-file retention, import deduplication, durable retries and leases, account-scoped data access, review audit trail, requisition conflict alerts, licensed external open-source contribution checks, PDF/DOCX parsing, protected API routes, safe CSV export, downloadable reports, responsive accessible controls, 12 synthetic applications and a repeatable 1,000-applicant evidence-engine test.
+Additional features: role-agnostic evidence-request checklists, downloadable interview briefs with source citations, explicit keyword-only shortlisting guidance, authenticated persistence, original-file retention, import deduplication, durable retries and leases, account-scoped data access, review audit trail, requisition conflict alerts, licensed external open-source contribution checks, PDF/DOCX parsing, protected API routes, safe CSV export, downloadable reports, responsive accessible controls, 12 synthetic applications and a repeatable 1,000-applicant evidence-engine test.
 
 ## GitHub priority and rejection recommendations
 
@@ -66,13 +76,19 @@ A public GitHub requirement is configurable. Missing or invalid GitHub evidence 
 
 A proper repository check requires a non-fork, non-archived repository with code and a readable README. The lookup examines up to 100 recently updated repositories and checks READMEs for up to three eligible repositories. External contribution checks examine up to five merged PR results and confirm a recognized target license. Counts are bounded **verified results**, not lifetime totals. The applicant's ownership of a linked account is self-declared and must be confirmed separately. Code quality, authorship, plagiarism and contributor identity are not conclusively established by these checks.
 
+## Keyword-only claims and generic job roles
+
+A list containing every required keyword is not sufficient for shortlisting. Required criteria stay unsupported until a specific example corroborates them; missing criteria remain distinct. The report now provides an evidence-request checklist and an interview brief for every configured criterion, including non-engineering roles. Supported examples get ownership/depth questions, missing skills get neutral experience questions, and contradictions get clarification prompts with the original citations. These plans are deterministic and work without an API key.
+
+Ask for context, the applicant's personal contribution, an outcome and a permitted way to check it. A numeric metric or public GitHub repository is not universally mandatory. Accept relevant redacted work, non-code artifacts and live walkthroughs. If a required skill remains unsupported, hold for clarification or record a reasoned HR decision; do not equate absent evidence with dishonesty. Job requirements and required/preferred flags remain configurable. The app remains a recruiting tool, not a general-purpose chat assistant.
+
 ## Dataset
 
 `samples/applications/` contains 12 fictional résumé-plus-cover-note texts; `public/sample-applications.zip` makes them importable together. `lib/demo.ts` adds explicitly synthetic contribution fixtures for visual exploration. Importing the text samples runs actual checks and does **not** reproduce fake GitHub results. The default requisition deliberately has no complete match. Samples cover aliases, keyword stuffing, timeline gaps, leadership conflict, salary gaps, and missing cloud evidence.
 
 ## Validation
 
-`npm test` covers 15 substantive evidence/ranking cases, including a 1,000-candidate batch. `npm run typecheck` checks TypeScript. Database validation is in `tests/database_test.py` (`python tests/database_test.py`). This is not a claim of 1,000 concurrent network/model/GitHub requests or a production load certification.
+`npm test` covers evidence/ranking cases, including a 1,000-candidate batch, plus mocked Groq routing and failure handling. No live model call is tested without an operator-provided key. `npm run typecheck` checks TypeScript. Database validation is in `tests/database_test.py` (`python tests/database_test.py`). This is not a claim of 1,000 concurrent network/model/GitHub requests or a production load certification.
 
 ## Practical limits
 
