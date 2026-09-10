@@ -1,0 +1,7 @@
+Neel Shah
+Full Stack Developer
+Experience
+Full Stack Developer | 2023–2026
+Built Django applications for a customer support ticketing system.
+Skills: Python, Kubernetes, distributed systems
+Expected salary: 12 LPA

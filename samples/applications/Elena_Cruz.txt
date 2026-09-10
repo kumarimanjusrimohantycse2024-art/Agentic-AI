@@ -1,0 +1,9 @@
+Elena Cruz
+Software Engineer
+Experience
+Software Engineer | 2021–2026
+Developed Python microservices for warehouse operations across 20 facilities.
+Built REST API integration workflows for the shipment processing system.
+Implemented pytest tests and reduced release regressions by 25%.
+Skills: container orchestration
+Expected salary: 19 LPA

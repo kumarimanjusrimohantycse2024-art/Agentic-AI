@@ -1,0 +1,8 @@
+Ishaan Rao
+Backend Developer
+Experience
+Backend Developer | 2024–2026
+Developed Python ingestion jobs for financial records and audit trails.
+Implemented FastAPI services with rate limiting for 3000 users.
+Deployed Kubernetes applications with readiness checks for internal tools.
+Expected salary: 10 LPA

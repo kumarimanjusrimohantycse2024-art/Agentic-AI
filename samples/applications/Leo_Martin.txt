@@ -1,0 +1,10 @@
+Leo Martin
+Software Engineer
+Experience
+Software Engineer | 2022–2026
+Built Python applications with queue processing for logistics workflows.
+Led a team of engineers to deliver the scheduling platform.
+Cover note
+I have never led a team and have no management experience.
+Skills: FastAPI, Kubernetes
+Expected salary: 16 LPA

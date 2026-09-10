@@ -1,0 +1,9 @@
+Rohan Das
+Software Engineer
+Experience
+Software Engineer | 2022–2026
+Built Python data pipelines that reduced reporting delays by 30%.
+Developed Django RESTful services with access control for internal reporting.
+Maintained Kubernetes deployments for the analytics engineering team.
+Skills: AWS, Kafka
+Expected salary: 14 LPA

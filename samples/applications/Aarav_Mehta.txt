@@ -1,0 +1,10 @@
+Aarav Mehta
+Platform Engineer
+Experience
+Platform Engineer | 2020–2026
+Built Python services processing 20000 requests per hour for payments.
+Developed FastAPI endpoints with pagination for the billing platform.
+Deployed K8s workloads across 12 services and reduced release time 40%.
+Implemented pytest integration tests for critical payment workflows.
+Designed Kafka message queues for distributed systems with retry processing.
+Expected salary: 16 LPA

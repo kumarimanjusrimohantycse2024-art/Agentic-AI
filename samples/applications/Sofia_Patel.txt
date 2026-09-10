@@ -1,0 +1,9 @@
+Sofia Patel
+Cloud Engineer
+Experience
+Cloud Engineer | 2023–2026
+Deployed Azure cloud deployment templates supporting 15 production services.
+Maintained K8s clusters for customer-facing applications with resource limits.
+Built integration tests for production deployment smoke testing across services.
+Skills: Python, FastAPI
+Expected salary: 15 LPA

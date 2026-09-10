@@ -1,0 +1,8 @@
+Omar Hassan
+API Developer
+Experience
+API Developer | 2022–2026
+Developed FastAPI services with validation for a healthcare scheduling tool.
+Implemented Python ingestion jobs for appointment records and audit events.
+Skills: Kubernetes
+Expected salary: 14 LPA

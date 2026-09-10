@@ -1,0 +1,8 @@
+Kavya Iyer
+Data Engineer
+Experience
+Data Engineer | 2023–2026
+Built Python data validation services processing 2000 records per minute.
+Designed Kafka pipelines for distributed systems with idempotent consumers.
+Skills: API development, Kubernetes
+Expected salary: 14 LPA

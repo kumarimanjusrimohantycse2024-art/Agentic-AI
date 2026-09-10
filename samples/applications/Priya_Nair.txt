@@ -1,0 +1,11 @@
+Priya Nair
+Software Engineer
+Summary
+5 years of Python experience
+Experience
+Software Engineering Intern | 2024–2025
+Built Python scripts to automate 12 repetitive reporting workflows.
+Education
+B.Tech | 2021–2025
+Skills: K8s, FastAPI, distributed systems
+Expected salary: 8 LPA

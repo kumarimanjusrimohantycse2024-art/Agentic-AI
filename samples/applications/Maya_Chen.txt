@@ -1,0 +1,10 @@
+Maya Chen
+Backend Engineer
+Experience
+Backend Engineer | 2021–2026
+Developed Python applications for retail inventory processing across stores.
+Built REST API endpoints serving 5000 users every day.
+Deployed AWS services using infrastructure templates for production applications.
+Implemented unit tests for 40 endpoints in the ordering service.
+Skills: Kubernetes, distributed systems
+Expected salary: 17 LPA
